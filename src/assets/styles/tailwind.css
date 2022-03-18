@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply flex h-screen w-screen items-center justify-center bg-light-gray text-dark-gray;
+  }
+}
