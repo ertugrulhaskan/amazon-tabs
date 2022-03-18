@@ -1,5 +1,5 @@
 <template>
-  <div class="min-w-[420px] bg-white shadow-md">
+  <div class="bg-white shadow-md md:min-w-[420px] md:max-w-md">
     <div class="tab-wrapper flex justify-between">
       <a
         @click.prevent="changeLanguage(item.lang)"
