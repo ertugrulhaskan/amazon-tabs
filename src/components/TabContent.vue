@@ -2,34 +2,27 @@
   <div class="min-w-[420px] bg-white shadow-md">
     <div class="tab-wrapper flex justify-between">
       <a
-        @click.prevent="changeLanguage"
+        @click.prevent="changeLanguage(item.lang)"
         v-for="(item, idx) in props.tabList"
         :key="`tab-${idx}`"
         :href="`#${item.lang}`"
         class="grow items-center bg-light-green py-2 px-4 text-center font-light text-white"
-        :class="[false ? 'active' : null]"
+        :class="locale === item.lang ? 'active' : null"
       >
         {{ item.title }}
       </a>
     </div>
     <div class="tab-content-wrapper p-5">
-      <div
-        v-for="(item, idx) in props.tabList"
-        :key="`tab-${idx}`"
-        :id="`${item.lang}`"
-      >
-        {{ selectedLanguage }}
+      <div>
+        {{ $t("content") }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
-
-import English from "@/assets/locales/en.json";
-import French from "@/assets/locales/fr.json";
-import German from "@/assets/locales/de.json";
+import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 
 export default {
   name: "TabContent",
@@ -38,20 +31,26 @@ export default {
       type: Array,
       required: true,
     },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
-    const selectedLanguage = ref(props.tabList[0].lang);
+    const { locale } = useI18n({ useScope: "global" });
 
-    console.log(English);
-    console.log(French);
-    console.log(German);
-
-    function changeLanguage() {
-      console.log("test");
+    function changeLanguage(lang) {
+      locale.value = lang;
+      localStorage.setItem("i18nextLng", lang);
     }
+
+    onMounted(() => {
+      localStorage.setItem("i18nextLng", locale.value);
+    });
+
     return {
       props,
-      selectedLanguage,
+      locale,
       changeLanguage,
     };
   },

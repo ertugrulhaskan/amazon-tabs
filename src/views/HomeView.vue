@@ -5,6 +5,7 @@
 <script>
 import TabContent from "@/components/TabContent.vue";
 import { reactive } from "vue";
+
 export default {
   name: "HomeView",
   components: { TabContent },
